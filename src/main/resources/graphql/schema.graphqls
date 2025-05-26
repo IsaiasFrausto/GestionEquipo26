@@ -1,0 +1,91 @@
+
+//http://localhost:8090/graphql
+
+"""
+Definición de las operaciones de modificación (Mutations) disponibles para productos.
+"""
+type Mutation {
+    """
+    Guarda un nuevo producto en la base de datos usando la información proporcionada.
+    
+    - `productoRequest`: Objeto de entrada con los datos del producto a guardar.
+    - Retorna el producto creado.
+    """
+    guardarProducto(productoRequest: ProductoRequest): Producto,
+
+    """
+    Actualiza un producto existente por su ID con los nuevos datos proporcionados.
+    
+    - `id`: Identificador del producto a actualizar.
+    - `productoRequest`: Objeto con los datos actualizados del producto.
+    - Retorna el producto actualizado.
+    """
+    actualizarProducto(id: String, productoRequest: ProductoRequest): Producto,
+
+    """
+    Elimina un producto de la base de datos por su ID.
+    
+    - `id`: Identificador del producto a eliminar.
+    - Retorna un mensaje (por ejemplo, de confirmación).
+    """
+    eliminarProducto(id: String): String
+}
+
+"""
+Definición de las consultas (Queries) disponibles para productos y categorías.
+"""
+type Query {
+    """
+    Devuelve la lista de todos los productos disponibles en la base de datos.
+    """
+    listarProductos: [Producto],
+
+    """
+    Devuelve un producto específico dado su ID.
+    
+    - `id`: Identificador del producto.
+    """
+    listarProductoPorId(id: String): Producto,
+
+    """
+    Devuelve la lista de todas las categorías registradas.
+    """
+    listarCategorias: [Categoria],
+
+    """
+    Devuelve una categoría específica dado su ID.
+    
+    - `id`: Identificador de la categoría (de tipo Float por compatibilidad con GraphQL).
+    """
+    listarCategoriaPorId(id: Float): Categoria
+}
+
+"""
+Representa un producto con sus atributos básicos y su relación con una categoría.
+"""
+type Producto {
+    id: String
+    nombre: String
+    precio: Float
+    cantidad: Int
+    categoria: Categoria
+}
+
+"""
+Representa una categoría con su identificador, nombre y lista de productos asociados.
+"""
+type Categoria {
+    id: Float
+    nombre: String
+    productos: [Producto]
+}
+
+"""
+Entrada para crear o actualizar un producto. Contiene los datos necesarios para persistir el producto.
+"""
+input ProductoRequest {
+    nombre: String
+    precio: Float
+    cantidad: Int
+    categoriaId: Float
+}
