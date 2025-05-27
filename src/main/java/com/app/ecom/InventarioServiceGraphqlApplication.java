@@ -1,9 +1,12 @@
+//Equipo 26 
+//Iñaki González | César Mecinas | Ernesto Puga | Sayid Valdivias | Rafael Romo
+//Fecha: 26_05_2025
 package com.app.ecom;
 
-import com.app.ecom.entities.Categoria;
-import com.app.ecom.entities.Producto;
-import com.app.ecom.repository.CategoriaRepository;
-import com.app.ecom.repository.ProductoRepository;
+import com.app.ecom.entities.EquipoDeTrabajo;
+import com.app.ecom.entities.Trabajador;
+import com.app.ecom.repository.EquipoDeTrabajoRepository;
+import com.app.ecom.repository.TrabajadorRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,23 +27,24 @@ public class InventarioServiceGraphqlApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(CategoriaRepository categoriaRepository, ProductoRepository productoRepository){
+	CommandLineRunner commandLineRunner(EquipoDeTrabajoRepository equipoDeTrabajoRepository, TrabajadorRepository trabajadorRepository){
 		Random random = new Random();
 		return args -> {
 			List.of("Computadoras","Impresoras","Smartphones").forEach(cat -> {
-				Categoria categoria = Categoria.builder().nombre(cat).build();
-				categoriaRepository.save(categoria);
+				EquipoDeTrabajo equipo = EquipoDeTrabajo.builder().nombre(cat).build();
+				equipoDeTrabajoRepository.save(equipo);
 			});
-			categoriaRepository.findAll().forEach(categoria -> {
+			equipoDeTrabajoRepository.findAll().forEach(equipo -> {
 				for(int i = 0;i < 10; i++){
-					Producto producto = Producto.builder()
+					Trabajador trabajador = Trabajador.builder()
 							.id(UUID.randomUUID().toString())
-							.nombre("Computadora-PC "+i)
-							.precio(100 + Math.random()*50000)
-							.cantidad(random.nextInt(100))
-							.categoria(categoria)
+							.nombre("Sayid "+i)
+							.apellido("Valdivia "+i)
+							.rol("Developer "+i)
+							.email("sayid.valdivia" + i + "@gmail.com")
+							.equipo(equipo)
 							.build();
-					productoRepository.save(producto);
+					trabajadorRepository.save(trabajador);
 				}
 			});
 		};

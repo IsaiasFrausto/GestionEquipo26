@@ -1,3 +1,7 @@
+//Equipo 26 
+//Iñaki González | César Mecinas | Ernesto Puga | Sayid Valdivias | Rafael Romo
+//Fecha: 26_05_2025
+
 package com.app.ecom.entities;
 
 import lombok.AllArgsConstructor;
@@ -6,6 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -16,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor // Genera un constructor vacío (por defecto).
 @Data // Genera getters, setters, toString(), equals() y hashCode() automáticamente.
 @Builder // Permite construir objetos Categoria usando el patrón Builder.
-public class Categoria {
+public class EquipoDeTrabajo {
 
     /**
      * Identificador único de la categoría.
@@ -26,16 +32,12 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * Nombre de la categoría (ej. "Computadoras", "Smartphones", etc.).
-     */
-    private String nombre;
+    private String nombre;         // Nombre del equipo
+    private String proyecto;       // Nombre del proyecto en el que trabaja
+    private String lider;          // Nombre del líder del equipo
+    private LocalDate fechaCreacion; // Fecha de creación del equipo
+    private String descripcion;    // Breve descripción del propósito del equipo
 
-    /**
-     * Lista de productos que pertenecen a esta categoría.
-     * Relación uno-a-muchos: una categoría puede tener muchos productos.
-     * El campo 'categoria' en la clase Producto es el dueño de la relación.
-     */
-    @OneToMany(mappedBy = "categoria")
-    private List<Producto> productos;
+    @OneToMany(mappedBy = "equipo")
+    private List<Trabajador> trabajadores;
 }

@@ -1,3 +1,6 @@
+//Equipo 26 
+//Iñaki González | César Mecinas | Ernesto Puga | Sayid Valdivias | Rafael Romo
+//Fecha: 26_05_2025
 package com.app.ecom.exceptions;
 
 import graphql.ErrorClassification;

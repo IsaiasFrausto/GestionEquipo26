@@ -1,91 +1,96 @@
-
-//http://localhost:8090/graphql
+#http://localhost:809/graphql
 
 """
-Definición de las operaciones de modificación (Mutations) disponibles para productos.
+Definición de las operaciones de modificación (Mutations) disponibles para Trabajadores.
 """
 type Mutation {
     """
-    Guarda un nuevo producto en la base de datos usando la información proporcionada.
+    Guarda un nuevo trabajador en la base de datos usando la información proporcionada.
     
-    - `productoRequest`: Objeto de entrada con los datos del producto a guardar.
-    - Retorna el producto creado.
+    - `trabajadorRequest`: Objeto de entrada con los datos del trabajador a guardar.
+    - Retorna el trabajador creado.
     """
-    guardarProducto(productoRequest: ProductoRequest): Producto,
+    guardarTrabajador(trabajadorRequest: TrabajadorRequest): Trabajador,
 
     """
-    Actualiza un producto existente por su ID con los nuevos datos proporcionados.
+    Actualiza un Tabajador existente por su ID con los nuevos datos proporcionados.
     
-    - `id`: Identificador del producto a actualizar.
-    - `productoRequest`: Objeto con los datos actualizados del producto.
-    - Retorna el producto actualizado.
+    - `id`: Identificador del trabajador a actualizar.
+    - `trabajadorRequest`: Objeto con los datos actualizados del trabajador.
+    - Retorna el trabajador actualizado.
     """
-    actualizarProducto(id: String, productoRequest: ProductoRequest): Producto,
+    actualizarTrabajador(id: String, trabajadorRequest: TrabajadorRequest): Trabajador,
 
     """
-    Elimina un producto de la base de datos por su ID.
+    Elimina un trabajador de la base de datos por su ID.
     
-    - `id`: Identificador del producto a eliminar.
+    - `id`: Identificador del trabajador a eliminar.
     - Retorna un mensaje (por ejemplo, de confirmación).
     """
-    eliminarProducto(id: String): String
+    eliminarTrabajador(id: String): String
 }
 
 """
-Definición de las consultas (Queries) disponibles para productos y categorías.
+Definición de las consultas (Queries) disponibles para Trabajadores y EquipoDeTrabajo.
 """
 type Query {
     """
-    Devuelve la lista de todos los productos disponibles en la base de datos.
+    Devuelve la lista de todos los Trabajadores disponibles en la base de datos.
     """
-    listarProductos: [Producto],
+    listarTrabajadores: [Trabajador],
 
     """
-    Devuelve un producto específico dado su ID.
+    Devuelve un trabajador específico dado su ID.
     
-    - `id`: Identificador del producto.
+    - `id`: Identificador del trabajador.
     """
-    listarProductoPorId(id: String): Producto,
+    listarTrabajadorPorId(id: String): Trabajador,
 
     """
-    Devuelve la lista de todas las categorías registradas.
+    Devuelve la lista de todas las equipos de trabajo registradas.
     """
-    listarCategorias: [Categoria],
+    listarEquipoDeTrabajo: [EquipoDeTrabajo],
 
     """
-    Devuelve una categoría específica dado su ID.
+    Devuelve un EquipoDeTrabajo específica dado su ID.
     
-    - `id`: Identificador de la categoría (de tipo Float por compatibilidad con GraphQL).
+    - `id`: Identificador del equipo de trabajo (de tipo Float por compatibilidad con GraphQL).
     """
-    listarCategoriaPorId(id: Float): Categoria
+    listarEquipoDeTrabajoPorId(id: Float): EquipoDeTrabajo
 }
 
 """
-Representa un producto con sus atributos básicos y su relación con una categoría.
+Representa un equipo de trabajo con sus atributos y la lista de trabajadores asociados.
 """
-type Producto {
-    id: String
-    nombre: String
-    precio: Float
-    cantidad: Int
-    categoria: Categoria
-}
-
-"""
-Representa una categoría con su identificador, nombre y lista de productos asociados.
-"""
-type Categoria {
+type EquipoDeTrabajo {
     id: Float
     nombre: String
-    productos: [Producto]
+    proyecto: String
+    lider: String
+    fechaCreacion: String
+    descripcion: String
+    trabajadores: [Trabajador]
 }
 
 """
-Entrada para crear o actualizar un producto. Contiene los datos necesarios para persistir el producto.
+Representa un trabajador con sus atributos básicos y su relación con un equipo de trabajo.
 """
-input ProductoRequest {
+type Trabajador {
+    id: String
     nombre: String
-    precio: Float
-    cantidad: Int
-    categoriaId: Float
+    apellido: String
+    rol: String
+    email: String
+    equipo: EquipoDeTrabajo
+}
+
+"""
+Entrada para crear o actualizar un trabajador. Contiene los datos necesarios para persistir el trabajador.
+"""
+input TrabajadorRequest {
+    nombre: String
+    apellido: String
+    rol: String
+    email: String
+    equipoId: Float
 }
